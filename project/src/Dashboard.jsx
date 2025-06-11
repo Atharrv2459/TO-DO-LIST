@@ -1,13 +1,17 @@
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
-export default function Navbar(){
+import Taskform from "./components/Taskform";
+import Tables from "./components/Tables";
+export default function Dashboard(){
     return (
         <div>
-            <Navbar />
-            <div className="flex flex-row">
-
-                
+             <Navbar />
+            <div className="flex flex-row"><Sidebar />
+             <Tables />
             </div>
-        </div>
+
+
+
+            </div>
     )
 }
