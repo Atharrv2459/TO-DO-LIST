@@ -5,11 +5,11 @@ import { addUserTask, deleteUserTask, getAllTasks, getUserTask, getUserTasks, up
 const router= express.Router();
 
 router.get("/Users",getAllusers);
-router.get("/User/:user_id",getUser);
+router.get("/User",authorization,getUser);
 router.post("/register", RegisterUser);
 router.post("/login",loginUser);
 router.delete("/delete/:user_id",deleteUser);
-router.patch("/changePassword",changePassword);
+router.patch("/changePassword",authorization,changePassword);
 
 router.get("/getAllTasks",getAllTasks);
 router.get("/getUserTasks",authorization,getUserTasks);

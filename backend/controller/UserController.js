@@ -6,23 +6,23 @@ import { authorization } from "../middleware/authorization.js";
 export const getAllusers= async(req,res)=>{
     try {
         const user= await pool.query(`SELECT * from users`);
-        res.status(404).json({"data": user.rows});
+        res.status(202).json({"data": user.rows});
         
     } catch (error) {
-        res.status.json({"Error in fetching the users": error})
+        res.status(404).json({"Error in fetching the users": error})
         
     }
 }
 
 export const getUser= async(req,res)=>{
-    const {user_id} = req.params;
+    const user_id = req.user.user_id;
     try{
-        const user = await pool.query(`SELECT * from users WHERE user_id=$1`,user_id);
-        res.status.json({"data": user.rows[0]});
+        const user = await pool.query(`SELECT * from users WHERE user_id=$1`,[user_id]);
+        res.status(202).json({"data": user.rows[0]});
 
     }
     catch(error){
-        res.status.json({"Error in fetching the users": error});
+        res.status(404).json({"Error in fetching the users": error});
 
     }
 }
@@ -112,23 +112,40 @@ export const deleteUser = async(req,res)=>{
     }
 }
 
-export const changePassword = async(req,res,oldPassword,newPassword)=>{
-    const {password} = req.body;
-    const user_id = req.user.user_id;
-    const user= await pool.query("Select * from users where user_id = $1",[user_id]);
-    if(user.rows.length===0){
-        res.status(404).json({"User not found":error});
+export const changePassword = async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  const user_id = req.user.user_id; // extracted from JWT in authorization middleware
+
+  try {
+    const userResult = await pool.query(
+      "SELECT * FROM users WHERE user_id = $1",
+      [user_id]
+    );
+
+    if (userResult.rows.length === 0) {
+      return res.status(404).json({ error: "User not found" });
     }
 
-    const Match = await bcrypt.compare(oldPassword,user.rows[0].password);
-    if(!Match){
-        res.status(404).json({"Password not matched":error});
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
-   const updatedPasswordUser= await pool.query("UPDATE users SET user_password = $1 WHERE email=$2 returning *",[hashedPassword,email]);
-   return updatedPasswordUser.rows[0];
+    const user = userResult.rows[0];
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ error: "Old password is incorrect" });
     }
-}
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const updateResult = await pool.query(
+      "UPDATE users SET password = $1 WHERE user_id = $2 RETURNING *",
+      [hashedPassword, user_id]
+    );
 
+    res.status(200).json({
+      message: "Password changed successfully",
+      user: updateResult.rows[0],
+    });
+  } catch (error) {
+    console.error("Error changing password:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 
 
 

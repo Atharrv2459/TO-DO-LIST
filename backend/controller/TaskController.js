@@ -60,7 +60,7 @@ export const updateUserTask = async(req,res)=>{
         if(user.rows.length ===0){
             res.status(404).json({"Error":"User does not exist"});
                 }
-        const updateTask = await pool.query(`update tasks set is_completed = $1, updated_at = $2 where user_id = $3 returning *`,[is_completed,updated_at,user_id]);
+        const updateTask = await pool.query(`update tasks set is_completed = $1, updated_at = $2 where id = $3 and user_id = $4 returning *`,[is_completed,updated_at,id,user_id]);
         res.status(201).json({"data":updateTask.rows[0]});
     }
     catch(error){

@@ -7,8 +7,10 @@ import Profile from "./profile";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Register from "./Register";
 import Login from "./Login";
+import { Toaster } from "react-hot-toast";
 export default function App(){
     return(
+         <div className="min-h-screen bg-base-200 transition-colors duration-300">
             <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/TaskForm" element={<Taskform />} />
@@ -17,5 +19,7 @@ export default function App(){
                 <Route path="/Register" element={<Register />} />
                 <Route path="#modal" element={<Taskform />} />
             </Routes>
+            <Toaster />
+            </div>
     )
 }
