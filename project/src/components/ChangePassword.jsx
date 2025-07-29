@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {toast} from "react-hot-toast";
 
 function ChangePassword(){
     const [ email , setEmail]= useState("");
@@ -18,13 +19,13 @@ function ChangePassword(){
                 headers:{
                     token : token
                 }})
-                alert("Password changed successfully")
+                toast.success("Password changed successfully")
             }
             
 
         
         catch(err){
-            alert(JSON.stringify(err.response?.data || "Something went wrong"));
+            toast.err("Old password is incorrect")
 
         }
     }

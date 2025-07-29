@@ -3,7 +3,7 @@ import Sidebar from "./components/Sidebar";
 import Tables from "./components/Tables";
 import Taskform from "./components/Taskform";
 import Dashboard from "./Dashboard";
-import Profile from "./profile";
+import Profile from "./Profile";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Register from "./Register";
 import Login from "./Login";

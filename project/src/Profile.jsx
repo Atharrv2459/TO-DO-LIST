@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar"
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function Profile(){
 
@@ -41,7 +42,7 @@ export default function Profile(){
                 headers:{
                     Authorization : token
                 }})
-                alert("Password changed successfully");
+                toast.success("Password changed successfully");
                 setOldPassword("");
                 setNewPassword("");
                 
@@ -50,7 +51,7 @@ export default function Profile(){
 
         
         catch(err){
-            alert(JSON.stringify(err.response?.data || "Something went wrong"));
+            toast.error("Old password is incorrect");
 
         }
     }

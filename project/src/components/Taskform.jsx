@@ -18,8 +18,8 @@ export default function Taskform({ isOpen, onClose,fetchTasks }) {
           },
         }
       );
-      setTask_name(""); // Clear input after submission
-      onClose(); // Close modal after submit
+      setTask_name("");
+      onClose(); 
       toast.success("Task added successfully");
     } catch (error) {
       toast.error("Error adding task");
@@ -38,13 +38,13 @@ export default function Taskform({ isOpen, onClose,fetchTasks }) {
           onChange={(e) => setTask_name(e.target.value)}
           className="border p-2 rounded"
         />
-        <button type="submit" className="bg-violet-700 text-white py-2 px-4 rounded hover:bg-violet-800 cursor-pointer">
+        <button type="submit" className="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600 cursor-pointer transition">
           Add New Task
         </button>
         <button
           type="button"
           onClick={onClose}
-          className="bg-gray-400 text-white py-2 px-4 rounded hover:bg-gray-500 cursor-pointer"
+          className="bg-gray-400 text-white py-2 px-4 rounded hover:bg-gray-500 cursor-pointer transition"
         >
           Close
         </button>

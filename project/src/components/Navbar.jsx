@@ -22,13 +22,8 @@ export default function Navbar() {
           <FaBook size={32} className="text-yellow-600" />
           <h1 className="text-2xl font-bold text-gray-800">TO DO LIST</h1>
         </div>
-        <input
-          type="text"
-          placeholder="Search"
-          className="rounded-xl bg-gray-100 px-4 py-2 outline-none w-72 text-sm"
-        />
-        <button onClick={handleSignout}
-          className="bg-amber-400 hover:bg-amber-500 transition px-4 py-2 rounded-xl font-semibold cursor-pointer">
+        
+        <button onClick={handleSignout} className="bg-amber-400 hover:bg-amber-500 transition px-4 py-2 rounded-xl font-semibold cursor-pointer">
           Sign Out
         </button>
       </nav>
